@@ -1,0 +1,28 @@
+# Alan Woessner Homework 2
+
+#! /bin/bash
+
+#assn02-1
+
+# Loop through each value between 808 and 8008, and echo TR- with each value
+for i in $(seq 808 8008) #this can also be done using {808..8008}
+	do
+		echo TR-$i
+	done
+
+#assn02-2
+
+# Make sure we are in the correct directory
+cd ~/Desktop/watermelon_files/watermelon_nt
+
+# Do everything that "bash_loop3.sh" does, with slight modifications
+echo '#! /bin/bash'
+
+for file in *nad*.fasta
+do
+
+        # print out the perl script I want to run on the current file in my loop
+        echo my_python_script.py $file '>' ${file%.fasta}.out
+
+done 
+
