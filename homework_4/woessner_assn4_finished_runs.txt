@@ -1,0 +1,59 @@
+PBS Job Id: 1356005.torque
+Job Name:   BLAST
+Exec host:  tres0913/31+tres0913/30+tres0913/29+tres0913/28+tres0913/27+tres0913/26+tres0913/25+tres0913/24
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:00
+resources_used.mem=0kb
+resources_used.vmem=0kb
+resources_used.walltime=00:00:01
+
+PBS Job Id: 1356006.torque
+Job Name:   BLAST
+Exec host:  tres0913/31+tres0913/30+tres0913/29+tres0913/28+tres0913/27+tres0913/26+tres0913/25+tres0913/24
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:00
+resources_used.mem=0kb
+resources_used.vmem=0kb
+resources_used.walltime=00:00:01
+
+PBS Job Id: 1356007.torque
+Job Name:   BLAST
+Exec host:  tres0921/31+tres0921/30+tres0921/29+tres0921/28+tres0921/27+tres0921/26+tres0921/25+tres0921/24
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:00
+resources_used.mem=0kb
+resources_used.vmem=0kb
+resources_used.walltime=00:00:01
+
+PBS Job Id: 1356008.torque
+Job Name:   BLAST
+Exec host:  tres1006/7+tres1006/6+tres1006/5+tres1006/4+tres1006/3+tres1006/2+tres1006/1+tres1006/0
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:00
+resources_used.mem=0kb
+resources_used.vmem=0kb
+resources_used.walltime=00:00:01
+
+PBS Job Id: 1356009.torque
+Job Name:   BLAST
+Exec host:  tres1006/15+tres1006/14+tres1006/13+tres1006/12+tres1006/11+tres1006/10+tres1006/9+tres1006/8
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:01
+resources_used.mem=64080kb
+resources_used.vmem=327708kb
+resources_used.walltime=00:01:22
+
+PBS Job Id: 1356010.torque
+Job Name:   BLAST
+Exec host:  tres1006/23+tres1006/22+tres1006/21+tres1006/20+tres1006/19+tres1006/18+tres1006/17+tres1006/16
+Execution terminated
+Exit_status=0
+resources_used.cput=00:00:00
+resources_used.mem=20384kb
+resources_used.vmem=291416kb
+resources_used.walltime=00:00:00

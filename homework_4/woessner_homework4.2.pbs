@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#PBS -N BLAST
+#PBS -q q06h32c 
+#PBS -j oe
+#PBS -m abe
+#PBS -M aewoessn@uark.edu
+#PBS -o BLAST.$PBS_JOBID
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=00:00:5:00
+
+cd $PBS_O_WORKDIR
+
+module load blast
+
+## Question 2
+
+# Change to a directory
+cd ~/watermelon_files/watermelon_nt
+
+# Create a database
+cat *.fasta | makeblastdb -dbtype nucl -out nt -title nt
+
+# Blast for nad4L gene
+blastn -query ~/watermelon_files/watermelon_nt/nad4L.fasta -db nt

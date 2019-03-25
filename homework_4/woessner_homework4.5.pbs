@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#PBS -N BLAST
+#PBS -q q06h32c 
+#PBS -j oe
+#PBS -m abe
+#PBS -M aewoessn@uark.edu
+#PBS -o BLAST.$PBS_JOBID
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=00:00:5:00
+
+cd $PBS_O_WORKDIR
+
+module load blast
+
+## Question 5
+
+# Blast for nad4L gene against NCBI "nr" database
+blastn -query ~/watermelon_files/watermelon_nt/nad4L.fasta -remote -db nr
