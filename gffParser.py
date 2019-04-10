@@ -2,10 +2,17 @@
 
 # The purpose of this python script is to correctly parse a .gff and .fsa file
 
+import argparse
+
+parser = argparse.ArgumentParser(description='Parses a .gff and .fasta (.fsa) file');
+parser.add_argument('gffFile',help = 'Name of .gff file (with extension)');
+parser.add_argument('fsaFile',help='Name of .fsa file (with extension)');
+args = parser.parse_args();
+
 # Add argparse for gff and fasta files
 
-gffFile = open('watermelon.gff');
-fsaFile = open('watermelon.fsa');
+gffFile = open(args.gffFile);
+fsaFile = open(args.fsaFile);
 
 # Open the gff file
 
