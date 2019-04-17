@@ -3,21 +3,25 @@
 # The purpose of this python script is to correctly parse a .gff and .fsa file
 
 import argparse
+from Bio import SeqIO
 
-parser = argparse.ArgumentParser(description='Parses a .gff and .fasta (.fsa) file');
-parser.add_argument('gffFile',help = 'Name of .gff file (with extension)');
-parser.add_argument('fsaFile',help='Name of .fsa file (with extension)');
-args = parser.parse_args();
+# Declare functions
+def getArgs():
+    # Parse the inputs
+    parser = argparse.ArgumentParser(description='Parses a .gff and .fasta (.fsa) file');
+    parser.add_argument('gffFile',help = 'Name of .gff file (with extension)');
+    parser.add_argument('fsaFile',help='Name of .fsa file (with extension)');
+    return(parser.parse_args());
+#end
 
-# Add argparse for gff and fasta files
+def openFile(fileName):
+    # Open the gff and fasta files
+    file = open(fileName);
 
-gffFile = open(args.gffFile);
-fsaFile = open(args.fsaFile);
+    return(file)
+#end
 
-# Open the gff file
-
-for gffLine in gffFile:
-
+def parseGff(gffLine):
     # Parse every line in the gff file
     content = gffLine.rstrip('\n').split('\t');
     sequence = content[0];
@@ -30,17 +34,53 @@ for gffLine in gffFile:
     phase = content[7];
     attributes = content[8];
 
-    # Pull out the sequences from the fsa file
-    for fsaLine in fsaFile:
-        if not fsaLine.startswith('>'):
-            fsaSequence = fsaLine;
+    return(sequence,source,feature,start,end,score,strand,phase,attributes);
+#end
 
+def findSubsequence(fsaSequence,start,end):
     # Pull out the subsequence
-    subSequence = fsaSequence[int(start):int(end)];
+    return(fsaSequence[int(start):int(end)]);
+#end
 
+def getGCContent(subSequence):
     # Calculate the G/C content
-    GCcontent = (subSequence.upper().count('G') + subSequence.upper().count('C'))/len(subSequence);
-    print(GCcontent)
+    return((subSequence.upper().count('G') + subSequence.upper().count('C'))/len(subSequence));
+#end
 
-gffFile.close();
-fsaFile.close();
+def closeFile(file):
+    file.close();
+#end
+
+def main():
+    # Get arguments
+    args = getArgs();
+
+    # Open files
+    gffFile = openFile(args.gffFile);
+    fsaFile = openFile(args.fsaFile);
+
+    # Get the sequence from the fsa file
+    for line in fsaFile:
+        if not line.startswith('>'):
+            fsaSequence = line;
+
+    # Go through every line in the gff file
+    for line in gffFile:
+        # Parse the line
+        [sequence,source,feature,start,end,score,strand,phase,attributes] = parseGff(line);
+
+        # Get the subsequence
+        subSequence = findSubsequence(fsaSequence,start,end);
+
+        # Calculate the G/C content
+        gcContent = getGCContent(subSequence);
+
+
+        print(gcContent)
+
+    closeFile(gffFile);
+    closeFile(fsaFile);
+#end
+
+if __name__ == "__main__":
+    main();
