@@ -9,16 +9,21 @@ from Bio import SeqIO
 def getArgs():
     # Parse the inputs
     parser = argparse.ArgumentParser(description='Parses a .gff and .fasta (.fsa) file');
-    parser.add_argument('gffFile',help = 'Name of .gff file (with extension)');
+    parser.add_argument('gffFile',help ='Name of .gff file (with extension)');
     parser.add_argument('fsaFile',help='Name of .fsa file (with extension)');
     return(parser.parse_args());
 #end
 
-def openFile(fileName):
-    # Open the gff and fasta files
+def openGffFile(fileName):
+    # Open the gff file
     file = open(fileName);
 
     return(file)
+#end
+
+def loadFsaSequence(fileName):
+    # Open the fasta file using SeqIO
+    return(SeqIO.read(fileName,'fasta').seq);
 #end
 
 def parseGff(gffLine):
@@ -42,6 +47,11 @@ def findSubsequence(fsaSequence,start,end):
     return(fsaSequence[int(start):int(end)]);
 #end
 
+def getReverseComplement(sequence):
+    # Get the reverse complement
+    return(sequence.reverse_complement());
+#end
+
 def getGCContent(subSequence):
     # Calculate the G/C content
     return((subSequence.upper().count('G') + subSequence.upper().count('C'))/len(subSequence));
@@ -56,18 +66,18 @@ def main():
     args = getArgs();
 
     # Open files
-    gffFile = openFile(args.gffFile);
-    fsaFile = openFile(args.fsaFile);
+    gffFile = openGffFile(args.gffFile);
+    fsaSequence = loadFsaSequence(args.fsaFile);
 
-    # Get the sequence from the fsa file
-    for line in fsaFile:
-        if not line.startswith('>'):
-            fsaSequence = line;
-
+    reverseComplement = getReverseComplement(fsaSequence);
     # Go through every line in the gff file
     for line in gffFile:
         # Parse the line
         [sequence,source,feature,start,end,score,strand,phase,attributes] = parseGff(line);
+
+        # Check to see if the strand is negative
+        if strand == '-':
+            print(findSubsequence(reverseComplement,start,end));
 
         # Get the subsequence
         subSequence = findSubsequence(fsaSequence,start,end);
@@ -75,11 +85,9 @@ def main():
         # Calculate the G/C content
         gcContent = getGCContent(subSequence);
 
-
         print(gcContent)
 
     closeFile(gffFile);
-    closeFile(fsaFile);
 #end
 
 if __name__ == "__main__":
