@@ -4,6 +4,7 @@
 
 import argparse
 from Bio import SeqIO
+import re
 
 # Declare functions
 def getArgs():
@@ -44,7 +45,7 @@ def parseGff(gffLine):
 
 def findSubsequence(fsaSequence,start,end):
     # Pull out the subsequence
-    return(fsaSequence[int(start):int(end)]);
+    return(fsaSequence[int(start)-1:int(end)]);
 #end
 
 def getReverseComplement(sequence):
@@ -71,21 +72,36 @@ def main():
 
     reverseComplement = getReverseComplement(fsaSequence);
     # Go through every line in the gff file
+    counter = 1;
     for line in gffFile:
-        # Parse the line
-        [sequence,source,feature,start,end,score,strand,phase,attributes] = parseGff(line);
 
-        # Check to see if the strand is negative
-        if strand == '-':
-            print(findSubsequence(reverseComplement,start,end));
+        print('Line: ' + str(counter));
 
-        # Get the subsequence
-        subSequence = findSubsequence(fsaSequence,start,end);
+        # See if line is commented
 
-        # Calculate the G/C content
-        gcContent = getGCContent(subSequence);
+        match = re.search('#.*',line);
+        if not match:
+            # Parse the line
+            [sequence,source,feature,start,end,score,strand,phase,attributes] = parseGff(line);
 
-        print(gcContent)
+            # Check to see if the strand is negative, if it is, then use the reverse complement
+            if strand == '-':
+                print('1: ' + findSubsequence(fsaSequence,start,end));
+                subSequence = getReverseComplement(fsaSequence[int(start)-1:int(end)]);
+                print('2: ' + subSequence);
+            else:
+                # Get the subsequence
+                subSequence = findSubsequence(fsaSequence,start,end);
+
+            # Calculate the G/C content
+            gcContent = getGCContent(subSequence);
+
+            print(gcContent)
+        else:
+            print('Line has been commented');
+
+
+        counter = counter+1;
 
     closeFile(gffFile);
 #end

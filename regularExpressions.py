@@ -113,4 +113,4 @@ crush = "<BOLD>Holy moly</BOLD>, it's <BOLD>Alicia Keys</BOLD>";
 
 # Example 14
 names = 'Katherine, Catheryn, Cathryn, katharine, Katherine, Catherine, Kathrin, Kathryn';
-match = re.search('.(ath).*(n)',names,re.I);
+match = re.findall('.?ath.*?n',names,re.I);
